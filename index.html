@@ -34,6 +34,8 @@
   .btn-outline{background:transparent;color:var(--primary);border:1px solid var(--border)}
   .btn-outline:hover{background:var(--bg)}
   .content{padding:20px;max-width:1400px}
+  body[data-active-section="resumen"] .topbar{padding:6px 20px}
+  body[data-active-section="resumen"] .content{padding:8px 16px 4px}
   .section{display:none;animation:fadeIn .3s ease}
   .section.active{display:block}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -121,25 +123,26 @@
   .slide-grid-4{grid-template-columns:repeat(4,1fr)}
   .slide-grid-3{grid-template-columns:repeat(3,1fr)}
   .slide-grid-2{grid-template-columns:repeat(2,1fr)}
-  .slide-kpi{padding:14px;border-radius:8px;border:1px solid var(--border);text-align:center;background:#fafbff}
+  .slide-kpi{padding:11px;border-radius:8px;border:1px solid var(--border);text-align:center;background:#fafbff}
   .slide-kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-soft);font-weight:600;margin-bottom:4px}
   .slide-kpi-value{font-size:22px;font-weight:700;color:var(--primary)}
   .slide-kpi-meta{font-size:10px;color:var(--text-soft);margin-top:3px}
-  .slide-objective{padding:10px 12px;border:1px solid var(--border);border-radius:6px;border-left:3px solid var(--primary);margin-bottom:0;background:#fafbff;min-width:0}
-  .slide-objectives-grid{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr);grid-auto-flow:column;gap:10px 16px;height:100%}
+  .slide-objective{padding:10px 12px;border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--primary);margin-bottom:0;background:#fafbff;min-width:0}
+  .slide-objectives-grid{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:9px 16px;height:100%;align-content:center}
   .slide-objective-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-  .slide-objective-id{font-size:10px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
-  .slide-objective-text{font-size:12px;color:var(--text);margin-bottom:4px;font-weight:400}
-  .slide-objective-meta{display:flex;gap:10px;font-size:10px;color:var(--text-soft);align-items:center;flex-wrap:wrap}
+  .slide-objective-id{font-size:10.5px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
+  .slide-objective-text{font-size:12px;color:var(--text);margin-bottom:5px;font-weight:400;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .slide-objective-meta{display:flex;gap:10px;font-size:10.5px;color:var(--text-soft);align-items:center;flex-wrap:wrap}
   .slide-highlight{background:linear-gradient(135deg,#f0f3ff 0%,#fafbff 100%);border-left:4px solid var(--primary);padding:12px 16px;border-radius:6px;margin-bottom:10px}
   .slide-highlight-title{font-size:11px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
   .slide-highlight-value{font-size:13px;color:var(--text)}
   .slide-risk{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;margin-bottom:6px;background:#fafbff}
   .slide-risk-text{flex:1;font-size:11px}
-  .slide-container.fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;border-radius:0}
-  .slide-container.fullscreen .slide-viewport{height:100vh;aspect-ratio:auto;zoom:1}
-  .slide-container.fullscreen .slide{padding:60px 80px}
-  @media (min-width:901px){.slide-viewport{zoom:0.72}}
+  .slide-container.fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100dvh;z-index:9999;border-radius:0;background:var(--primary-dark);display:flex;align-items:center;justify-content:center}
+  .slide-container.fullscreen .slide-viewport{position:relative;aspect-ratio:16/9;width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));zoom:1;margin:0;box-shadow:0 0 40px rgba(0,0,0,.35)}
+  @supports (height:100dvh){.slide-container.fullscreen .slide-viewport{width:min(100vw,calc(100dvh * 16 / 9));height:min(100dvh,calc(100vw * 9 / 16))}}
+  .slide-container.fullscreen .slide{padding:36px 56px}
+  @media (max-width:768px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:-280px;z-index:100;transition:left .3s;width:280px}.sidebar.open{left:0}.grid-2,.grid-3,.slide-grid-2,.slide-grid-3,.slide-grid-4{grid-template-columns:1fr}.content{padding:12px}.topbar{padding:10px 12px}.topbar h1{font-size:14px}.btn{padding:6px 10px;font-size:11px}.menu-toggle{display:block !important}.slide{padding:16px}.slide-container.fullscreen .slide{padding:44px 14px 16px}.slide-header h2{font-size:18px}.slide-header p{font-size:11px}.slide-objectives-grid{grid-template-columns:1fr !important;grid-template-rows:none !important;grid-auto-flow:row !important;gap:8px !important;align-content:start !important}.slide-objective{padding:10px 12px !important}.slide-objective-text{font-size:12.5px !important;margin-bottom:5px !important}.slide-objective-id{font-size:10px !important}.slide-objective-meta{font-size:10px !important;gap:8px !important}.slide-nav{bottom:8px;right:8px;gap:4px}.slide-nav button{width:34px;height:34px;font-size:16px}.slide-controls{top:8px;right:8px}.slide-controls button{padding:5px 9px;font-size:11px}.slide-counter{bottom:8px;left:8px;font-size:10px;padding:4px 8px}.slide-bus-image img{max-width:55vw !important;max-height:22vh !important}.slide-kpi-value{font-size:16px}}
   @media print{.sidebar,.topbar,.no-print,.filter-bar,.slide-nav,.slide-controls,.slide-progress,.slide-counter{display:none !important}.app{grid-template-columns:1fr}.section{display:block !important}.content{padding:0}.slide-container{box-shadow:none}.slide{position:relative;display:block !important;page-break-after:always;height:auto;aspect-ratio:auto;padding:30px}.slide-viewport{aspect-ratio:auto;height:auto;zoom:1}}
   .empty-state{text-align:center;padding:60px 20px;color:var(--text-soft)}
   .empty-state-icon{font-size:56px;opacity:.3;margin-bottom:12px}
@@ -147,7 +150,7 @@
   .toast{position:fixed;bottom:20px;right:20px;background:var(--primary);color:#fff;padding:10px 18px;border-radius:8px;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:1000;transform:translateY(100px);opacity:0;transition:all .3s}
   .toast.show{transform:translateY(0);opacity:1}
   @media (max-width:1024px){.grid-4,.slide-grid-4{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:768px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:-280px;z-index:100;transition:left .3s;width:280px}.sidebar.open{left:0}.grid-2,.grid-3,.slide-grid-2,.slide-grid-3,.slide-grid-4{grid-template-columns:1fr}.content{padding:12px}.topbar{padding:10px 12px}.topbar h1{font-size:14px}.btn{padding:6px 10px;font-size:11px}.menu-toggle{display:block !important}.slide{padding:16px}.slide-header h2{font-size:18px}.slide-header p{font-size:11px}.slide-objectives-grid{grid-template-columns:1fr !important;grid-template-rows:none !important;grid-auto-flow:row !important;gap:6px !important}.slide-nav{bottom:8px;right:8px;gap:4px}.slide-nav button{width:28px;height:28px;font-size:14px}.slide-controls{top:8px;right:8px}.slide-controls button{padding:4px 8px;font-size:10px}.slide-counter{bottom:8px;left:8px;font-size:10px;padding:4px 8px}.slide-bus-image img{max-width:55vw !important;max-height:22vh !important}.slide-kpi-value{font-size:16px}}
+
   .menu-toggle{display:none;background:var(--primary);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:16px}
   .chip{display:inline-block;padding:2px 8px;background:#eef1ff;color:var(--primary);border-radius:10px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
   .priority{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600}
@@ -239,7 +242,7 @@
 
       <div id="sectionsContainer" style="display:none">
         <section class="section active" id="section-resumen">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px" class="no-print">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:10px" class="no-print">
             <div>
               <div class="section-title">Resumen Ejecutivo</div>
               <div class="section-subtitle">Vista General para Dirección General</div>
@@ -356,6 +359,7 @@
 let workbookData=null,lastUpdate=null,currentSlide=0,totalSlides=0;
 
 function initApp(){
+  document.body.setAttribute('data-active-section','resumen');
   // Configurar navegación
   document.querySelectorAll('.nav-item').forEach(item=>{
     item.addEventListener('click',()=>{
@@ -367,7 +371,9 @@ function initApp(){
       if(target) target.classList.add('active');
       const titles={resumen:'Resumen Ejecutivo',roadmap:'Avance por Fase',diagnostico:'Diagnóstico Nacional',kpis:'KPIs Corporativos',kpis2:'KPIs Secundarios',refacciones:'Refacciones Críticas',procesos:'Estandarización de Procesos',confiabilidad:'Programa de Confiabilidad',riesgos:'Riesgos y Plan de Mitigación',avances:'Plan Mensual de Avances',proyectos:'Proyectos Estratégicos',config:'Configuración'};
       document.getElementById('pageTitle').textContent=titles[section]||'';
+      document.body.setAttribute('data-active-section',section);
       if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
+      if(section==='resumen') setTimeout(fitExecutiveSlide,80);
     });
   });
 
@@ -445,6 +451,31 @@ function handleFile(e){
   reader.readAsArrayBuffer(file);
 }
 
+function sheetToVisibleRows(ws){
+  const ref=ws['!ref'];
+  if(!ref) return [];
+  const range=XLSX.utils.decode_range(ref);
+  const rows=[];
+  for(let r=range.s.r;r<=range.e.r;r++){
+    if(ws['!rows']&&ws['!rows'][r]&&ws['!rows'][r].hidden) continue;
+    const row=[];
+    let hasContent=false;
+    for(let c=range.s.c;c<=range.e.c;c++){
+      const colHidden=ws['!cols']&&ws['!cols'][c]&&ws['!cols'][c].hidden;
+      const cellRef=XLSX.utils.encode_cell({r:r,c:c});
+      const cell=ws[cellRef];
+      let val='';
+      if(cell&&!colHidden){
+        val=(cell.w!==undefined)?cell.w:(cell.v!==undefined?cell.v:'');
+      }
+      row.push(val);
+      if(val!==''&&val!==null) hasContent=true;
+    }
+    if(hasContent) rows.push(row);
+  }
+  return rows;
+}
+
 function processWorkbook(wb){
   const hiddenSheets=new Set();
   if(wb.Workbook && wb.Workbook.Sheets){
@@ -461,8 +492,8 @@ function processWorkbook(wb){
     const ws=wb.Sheets[name];
     const ref=ws['!ref'];
     if(!ref){return}
-    const jsonData=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false,blankrows:false});
-    const filtered=jsonData.filter(row=>row.some(cell=>cell!==''&&cell!=null));
+    const jsonData=sheetToVisibleRows(ws);
+    const filtered=jsonData;
     if(filtered.length>0) workbookData[name]=filtered;
   });
   lastUpdate=new Date();
@@ -654,6 +685,23 @@ function extractRiesgos(data){
     }
   });
   return riesgos;
+}
+
+function extractPrioridades(data){
+  if(!data) return [];
+  const prioridades=[];
+  let inTable=false,headerSkipped=false;
+  data.forEach(row=>{
+    if(!row) return;
+    const first=String(row[0]||'').trim();
+    if(first.includes('PRIORIDADES')){inTable=true;headerSkipped=false;return}
+    if(inTable&&(first.includes('OBJETIVOS')||first.includes('FASES DEL ROADMAP')||first.includes('INDICADORES')||first.includes('RIESGOS'))){inTable=false;return}
+    if(inTable&&!headerSkipped){headerSkipped=true;return}
+    if(inTable&&first&&!first.toLowerCase().includes('prioridad')&&/^\d+$/.test(first)){
+      prioridades.push({prioridad:row[1]||'',responsable:row[2]||'',fecha:row[3]||''});
+    }
+  });
+  return prioridades;
 }
 
 function extractTalleres(data){
@@ -1036,6 +1084,7 @@ function renderSlides(){
   const diagnostico=findSheet('diagnóstico')||findSheet('diagnostico');
   const kpiData=extractKPIs(kpis);
   const objetivosData=extractObjetivos(resumen);
+  const prioridadesData=extractPrioridades(resumen);
   const fasesData=extractFases(resumen);
   const riesgosData=extractRiesgos(riesgos);
   const talleresData=extractTalleres(diagnostico);
@@ -1092,10 +1141,22 @@ function renderSlides(){
     slidesHtml+='</div>';
   }
   slidesHtml+='</div><div class="slide-footer"><span>Dirección de Mantenimiento · Transpais</span><span>Slide 7</span></div></div>';
+
+  slidesHtml+='<div class="slide"><div class="slide-header"><h2>Prioridades del Mes</h2><p>Enfoque inmediato del equipo de mantenimiento</p></div><div class="slide-content"><div class="slide-objectives-grid">';
+  if(prioridadesData.length){
+    prioridadesData.forEach((p,idx)=>{
+      const textoPrioridad=String(p.prioridad||'').replace(/^\s*\d+\s*[\.\)\-:]\s*/,'');
+      slidesHtml+='<div class="slide-objective"><div class="slide-objective-header"><div class="slide-objective-id">P'+(idx+1)+'</div></div><div class="slide-objective-text fw-400">'+textoPrioridad+'</div><div class="slide-objective-meta">'+(p.responsable?'<span>👤 '+p.responsable+'</span>':'')+(p.fecha?'<span>📅 '+p.fecha+'</span>':'')+'</div></div>';
+    });
+  } else {
+    slidesHtml+='<div class="text-muted" style="grid-column:1/-1;align-self:center;text-align:center">No hay prioridades registradas para este mes.</div>';
+  }
+  slidesHtml+='</div></div><div class="slide-footer"><span>Dirección de Mantenimiento · Transpais</span><span>Slide 8</span></div></div>';
   
   container.innerHTML=slidesHtml;
-  totalSlides=7;currentSlide=0;
+  totalSlides=8;currentSlide=0;
   updateSlideUI();
+  setTimeout(fitExecutiveSlide,80);
 }
 
 function updateSlideUI(){
@@ -1111,16 +1172,89 @@ function nextSlide(){if(currentSlide<totalSlides-1){currentSlide++;updateSlideUI
 function prevSlide(){if(currentSlide>0){currentSlide--;updateSlideUI()}}
 function toggleFullscreen(){
   const container=document.getElementById('slideContainer');
+  const viewport=document.getElementById('slideViewport');
+  const entering=!container.classList.contains('fullscreen');
+  if(entering){
+    lockViewportSize(viewport);
+  }
   container.classList.toggle('fullscreen');
-  if(!document.fullscreenElement){container.requestFullscreen().catch(err=>{})} else {document.exitFullscreen()}
+  if(entering){
+    container.requestFullscreen().catch(function(){});
+  } else {
+    unlockViewportSize(viewport);
+    if(document.fullscreenElement) document.exitFullscreen();
+    setTimeout(fitExecutiveSlide,150);
+  }
 }
+
+// Captura el tamaño visual EXACTO que el slide tiene en ese momento (con su zoom ya aplicado)
+// y lo fija en píxeles, para que pantalla completa solo centre y aísle el contenido sin agrandarlo.
+function lockViewportSize(viewport){
+  if(!viewport) return;
+  const rect=viewport.getBoundingClientRect();
+  viewport.style.zoom='1';
+  viewport.style.width=rect.width+'px';
+  viewport.style.height=rect.height+'px';
+  viewport.style.aspectRatio='auto';
+}
+function unlockViewportSize(viewport){
+  if(!viewport) return;
+  viewport.style.width='';
+  viewport.style.height='';
+  viewport.style.aspectRatio='';
+  viewport.style.zoom='';
+}
+
+// Ajusta automáticamente el zoom del slide para que se vea completo (sin scroll)
+// usando el mayor tamaño posible, en vez de un porcentaje fijo adivinado.
+function fitExecutiveSlide(){
+  const viewport=document.getElementById('slideViewport');
+  const container=document.getElementById('slideContainer');
+  if(!viewport||!container) return;
+  if(container.classList.contains('fullscreen')) return;
+  const section=document.getElementById('section-resumen');
+  if(!section||!section.classList.contains('active')) return;
+  viewport.style.zoom='1';
+  const naturalHeight=viewport.offsetHeight;
+  if(!naturalHeight) return;
+  const rect=viewport.getBoundingClientRect();
+  const available=window.innerHeight-rect.top-10;
+  let zoomVal=available/naturalHeight;
+  if(zoomVal>1) zoomVal=1;
+  if(zoomVal<0.45) zoomVal=0.45;
+  viewport.style.zoom=String(zoomVal);
+}
+
+let _fitTimer=null;
+function scheduleFit(){
+  if(_fitTimer) clearTimeout(_fitTimer);
+  _fitTimer=setTimeout(fitExecutiveSlide,150);
+}
+window.addEventListener('resize',scheduleFit);
+window.addEventListener('orientationchange',scheduleFit);
+window.addEventListener('load',function(){setTimeout(fitExecutiveSlide,300)});
+document.addEventListener('fullscreenchange',function(){
+  const container=document.getElementById('slideContainer');
+  const viewport=document.getElementById('slideViewport');
+  if(!document.fullscreenElement && container && container.classList.contains('fullscreen')){
+    container.classList.remove('fullscreen');
+    unlockViewportSize(viewport);
+    setTimeout(fitExecutiveSlide,150);
+  }
+});
 
 document.addEventListener('keydown',(e)=>{
   if(e.key==='ArrowRight') nextSlide();
   if(e.key==='ArrowLeft') prevSlide();
   if(e.key==='Escape'){
     const container=document.getElementById('slideContainer');
-    if(container.classList.contains('fullscreen')){container.classList.remove('fullscreen');if(document.fullscreenElement) document.exitFullscreen()}
+    const viewport=document.getElementById('slideViewport');
+    if(container.classList.contains('fullscreen')){
+      container.classList.remove('fullscreen');
+      unlockViewportSize(viewport);
+      if(document.fullscreenElement) document.exitFullscreen();
+    }
+    setTimeout(fitExecutiveSlide,150);
   }
 });
 
