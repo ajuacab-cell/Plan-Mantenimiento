@@ -150,6 +150,33 @@
   .toast{position:fixed;bottom:20px;right:20px;background:var(--primary);color:#fff;padding:10px 18px;border-radius:8px;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:1000;transform:translateY(100px);opacity:0;transition:all .3s}
   .toast.show{transform:translateY(0);opacity:1}
   @media (max-width:1024px){.grid-4,.slide-grid-4{grid-template-columns:repeat(2,1fr)}}
+  .mv-wrap{max-width:480px;margin:0 auto;padding:4px 0 24px}
+  .mv-card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(22,38,135,.08)}
+  .mv-card h2{font-size:14px;color:var(--primary);font-weight:700;margin-bottom:2px}
+  .mv-card .mv-sub{font-size:11px;color:var(--text-soft);margin-bottom:10px}
+  .mv-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .mv-stat{border-radius:8px;padding:10px;background:#fafbff;border-left:4px solid var(--primary)}
+  .mv-stat.green{border-left-color:var(--success)}
+  .mv-stat.yellow{border-left-color:var(--warning)}
+  .mv-stat.red{border-left-color:var(--danger)}
+  .mv-stat .mv-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-soft);font-weight:600}
+  .mv-stat .mv-value{font-size:20px;font-weight:700;color:var(--primary);margin-top:2px}
+  .mv-stat .mv-meta{font-size:10px;color:var(--text-soft);margin-top:2px}
+  .mv-item{border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:#fafbff}
+  .mv-item:last-child{margin-bottom:0}
+  .mv-item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:8px}
+  .mv-item-id{font-size:10px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
+  .mv-item-text{font-size:12.5px;line-height:1.35}
+  .mv-item-meta{display:flex;gap:10px;font-size:10.5px;color:var(--text-soft);margin-top:4px;flex-wrap:wrap}
+  .mv-signal{display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .mv-signal.green{background:var(--success)}
+  .mv-signal.yellow{background:var(--warning)}
+  .mv-signal.red{background:var(--danger)}
+  .mv-signal.gray{background:#c7cad9}
+  .mv-kpi-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+  .mv-kpi-row:last-child{border-bottom:none}
+  .mv-kpi-name{font-size:12.5px;font-weight:600;flex:1}
+  .mv-kpi-nums{font-size:11px;color:var(--text-soft);text-align:right;white-space:nowrap}
   @media (max-width:768px){.slide-viewport{aspect-ratio:auto;height:min(65vh,65dvh);min-height:340px}.slide-footer{display:none}.slide{padding-bottom:54px}.slide-container.fullscreen .slide-viewport{aspect-ratio:auto;width:100vw;height:100vh;height:100dvh}.slide-container.fullscreen .slide{padding:46px 16px 64px}}
 
   .menu-toggle{display:none;background:var(--primary);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:16px}
@@ -192,6 +219,7 @@
     </div>
     <div class="nav-section">
       <div class="nav-item active" data-section="resumen">🎯 Resumen Ejecutivo</div>
+      <div class="nav-item" data-section="resumen-movil">📱 Resumen ejecutivo (ver en móvil)</div>
     </div>
     <div class="nav-section">
       <div class="nav-title">Gestión</div>
@@ -266,6 +294,9 @@
               <div class="slide-progress" id="slideProgress"></div>
             </div>
           </div>
+        </section>
+        <section class="section" id="section-resumen-movil">
+          <div class="mv-wrap" id="movilContent"></div>
         </section>
         <section class="section" id="section-roadmap"></section>
         <section class="section" id="section-diagnostico"></section>
@@ -370,7 +401,7 @@ function initApp(){
       document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
       const target=document.getElementById('section-'+section);
       if(target) target.classList.add('active');
-      const titles={resumen:'Resumen Ejecutivo',roadmap:'Avance por Fase',diagnostico:'Diagnóstico Nacional',kpis:'KPIs Corporativos',kpis2:'KPIs Secundarios',refacciones:'Refacciones Críticas',procesos:'Estandarización de Procesos',confiabilidad:'Programa de Confiabilidad',riesgos:'Riesgos y Plan de Mitigación',avances:'Plan Mensual de Avances',proyectos:'Proyectos Estratégicos',config:'Configuración'};
+      const titles={resumen:'Resumen Ejecutivo','resumen-movil':'Resumen ejecutivo (ver en móvil)',roadmap:'Avance por Fase',diagnostico:'Diagnóstico Nacional',kpis:'KPIs Corporativos',kpis2:'KPIs Secundarios',refacciones:'Refacciones Críticas',procesos:'Estandarización de Procesos',confiabilidad:'Programa de Confiabilidad',riesgos:'Riesgos y Plan de Mitigación',avances:'Plan Mensual de Avances',proyectos:'Proyectos Estratégicos',config:'Configuración'};
       document.getElementById('pageTitle').textContent=titles[section]||'';
       document.body.setAttribute('data-active-section',section);
       if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
@@ -575,6 +606,7 @@ function renderAll(){
     else if(lowerName.includes('proyectos')) renderProyectos(data);
   });
   renderSlides();
+  renderMovil();
   updateStorageInfo();
 }
 
@@ -734,6 +766,93 @@ function getCurrentPhase(fases){
 function getCurrentPhaseStatus(fases){
   const active=fases.find(f=>String(f.estatus).toLowerCase().includes('curso')||String(f.estatus).includes('🟡'));
   return active?active.nombre:'';
+}
+
+function mvSignal(status){
+  const cls=getStatusClass(status);
+  return '<span class="mv-signal '+cls+'"></span>';
+}
+
+function renderMovil(){
+  const el=document.getElementById('movilContent');
+  if(!el) return;
+  if(!workbookData){el.innerHTML='<div class="mv-card"><p>Carga un archivo Excel para generar el resumen.</p></div>';return}
+  const resumen=findSheet('resumen ejecutivo');
+  const kpisSheet=findSheet('kpis corporativos');
+  const riesgosSheet=findSheet('riesgos')||resumen;
+  const diagnostico=findSheet('diagnóstico')||findSheet('diagnostico');
+
+  const kpiData=extractKPIs(kpisSheet);
+  const objetivosData=extractObjetivos(resumen);
+  const fasesData=extractFases(resumen);
+  const riesgosData=extractRiesgos(riesgosSheet);
+  const prioridadesData=extractPrioridades(resumen);
+  const talleresData=extractTalleres(diagnostico);
+
+  const kpisOnTrack=kpiData.filter(k=>getStatusClass(k.estatus)==='green').length;
+  const kpisWarning=kpiData.filter(k=>getStatusClass(k.estatus)==='yellow').length;
+  const kpisCritical=kpiData.filter(k=>getStatusClass(k.estatus)==='red').length;
+
+  let html='';
+
+  html+='<div class="mv-card"><h2>Estado General</h2><p class="mv-sub">Vista consolidada</p><div class="mv-stat-grid">'
+    +'<div class="mv-stat green"><div class="mv-label">KPIs en Meta</div><div class="mv-value">'+kpisOnTrack+'</div><div class="mv-meta">de '+kpiData.length+'</div></div>'
+    +'<div class="mv-stat yellow"><div class="mv-label">En Riesgo</div><div class="mv-value">'+kpisWarning+'</div></div>'
+    +'<div class="mv-stat red"><div class="mv-label">Críticos</div><div class="mv-value">'+kpisCritical+'</div></div>'
+    +'<div class="mv-stat"><div class="mv-label">Fase Actual</div><div class="mv-value" style="font-size:14px">'+getCurrentPhase(fasesData)+'</div></div>'
+    +'</div></div>';
+
+  if(kpiData.length){
+    html+='<div class="mv-card"><h2>Indicadores Clave</h2><p class="mv-sub">KPIs corporativos</p>';
+    kpiData.forEach(k=>{
+      html+='<div class="mv-kpi-row">'+(k.estatus?mvSignal(k.estatus):'<span class="mv-signal gray"></span>')+'<span class="mv-kpi-name">'+k.nombre+'</span><span class="mv-kpi-nums">'+(k.actual||'-')+' / '+(k.meta90||'-')+'</span></div>';
+    });
+    html+='</div>';
+  }
+
+  if(objetivosData.length){
+    html+='<div class="mv-card"><h2>Objetivos Estratégicos</h2>';
+    objetivosData.forEach(o=>{
+      html+='<div class="mv-item"><div class="mv-item-head"><span class="mv-item-id">'+o.id+'</span>'+(o.estatus?mvSignal(o.estatus):'')+'</div><div class="mv-item-text">'+o.objetivo+'</div>'+(o.plazo?'<div class="mv-item-meta"><span>📅 '+o.plazo+'</span></div>':'')+'</div>';
+    });
+    html+='</div>';
+  }
+
+  if(fasesData.length){
+    html+='<div class="mv-card"><h2>Roadmap 90 Días</h2>';
+    fasesData.forEach(f=>{
+      html+='<div class="mv-item"><div class="mv-item-head"><span class="mv-item-id">'+f.fase+' · '+f.periodo+'</span>'+(f.estatus?mvSignal(f.estatus):'')+'</div><div class="mv-item-text">'+f.nombre+'</div></div>';
+    });
+    html+='</div>';
+  }
+
+  if(prioridadesData.length){
+    html+='<div class="mv-card"><h2>Prioridades del Mes</h2>';
+    prioridadesData.forEach((p,idx)=>{
+      const texto=String(p.prioridad||'').replace(/^\s*\d+\s*[\.\)\-:]\s*/,'');
+      html+='<div class="mv-item"><div class="mv-item-head"><span class="mv-item-id">P'+(idx+1)+'</span></div><div class="mv-item-text">'+texto+'</div><div class="mv-item-meta">'+(p.responsable?'<span>👤 '+p.responsable+'</span>':'')+(p.fecha?'<span>📅 '+p.fecha+'</span>':'')+'</div></div>';
+    });
+    html+='</div>';
+  }
+
+  if(talleresData.totalUnits){
+    html+='<div class="mv-card"><h2>Red de Talleres</h2><div class="mv-stat-grid">'
+      +'<div class="mv-stat"><div class="mv-label">Total Flota</div><div class="mv-value">'+formatNumber(talleresData.totalUnits)+'</div></div>'
+      +'<div class="mv-stat"><div class="mv-label">Disponibilidad</div><div class="mv-value">'+talleresData.avgDisp.toFixed(1)+'%</div></div>'
+      +'<div class="mv-stat"><div class="mv-label">Detenidas</div><div class="mv-value">'+formatNumber(talleresData.totalDet)+'</div></div>'
+      +'<div class="mv-stat"><div class="mv-label">Backlog</div><div class="mv-value">'+formatNumber(talleresData.totalBack)+'</div></div>'
+      +'</div></div>';
+  }
+
+  if(riesgosData.length){
+    html+='<div class="mv-card"><h2>Riesgos y Mitigación</h2>';
+    riesgosData.forEach(r=>{
+      html+='<div class="mv-item"><div class="mv-item-head">'+(r.nivel?mvSignal(r.nivel):'')+'</div><div class="mv-item-text">'+r.riesgo+'</div></div>';
+    });
+    html+='</div>';
+  }
+
+  el.innerHTML=html||'<div class="mv-card"><p>No se encontraron datos.</p></div>';
 }
 
 function renderRoadmap(data){
